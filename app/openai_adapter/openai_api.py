@@ -37,7 +37,7 @@ prompt: 1other, eyecatch, headless, object head, flaming head, toned male, black
 negative_prompt: lowres, error, film grain, scan artifacts, worst quality, bad quality, jpeg artifacts, very displeasing, chromatic aberration, logo, dated, signature, multiple views, gigantic breasts, blurry, lowres, error
 </示例>
 <输出格式>
-严格按照JSON格式, 不要输出任何多余字符
+严格按照JSON格式, 不要输出任何多余字符, 也不要遗漏包裹json的反引号
 ```json
 {
 "prompt":"...",
