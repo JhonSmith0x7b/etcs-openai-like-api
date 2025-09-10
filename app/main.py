@@ -27,6 +27,11 @@ async def log_requests(request: Request, call_next):
     return response
 
 
+@app.api_route("/ping")
+async def pingpong():
+    return "pong"
+
+
 class SimpleNovelaiArgs(BaseModel):
     model: Optional[str]
     prompt: str
