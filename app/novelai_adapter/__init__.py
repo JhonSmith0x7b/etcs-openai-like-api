@@ -1,0 +1,1 @@
+from .novelai_api import Prompt2NovelaiArgs

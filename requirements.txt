@@ -17,6 +17,7 @@ cleo==2.1.0
 click==8.2.1
 crashtest==0.4.1
 distlib==0.4.0
+distro==1.9.0
 dotenv==0.9.9
 dulwich==0.21.7
 fastapi==0.116.1
@@ -27,10 +28,13 @@ fsspec==2025.9.0
 ftfy==6.3.1
 h11==0.16.0
 hf-xet==1.1.9
+httpcore==1.0.9
+httpx==0.28.1
 huggingface-hub==0.34.4
 idna==3.10
 installer==0.7.0
 jaraco-classes==3.4.0
+jiter==0.10.0
 jsonschema==4.25.1
 jsonschema-specifications==2025.9.1
 keyring==24.3.1
@@ -39,6 +43,7 @@ msgpack==1.1.1
 msgpackr-python==0.1.6
 multidict==6.6.4
 novelai-api==0.34.1
+openai==1.107.0
 packaging==25.0
 pexpect==4.9.0
 pillow==10.4.0

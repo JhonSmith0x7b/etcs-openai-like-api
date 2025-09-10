@@ -13,7 +13,7 @@ import logging
 NOVEL_AI_TOKEN = os.environ["NOVEL_AI_TOKEN"]
 
 
-class Prompt2NovelAIArgs(BaseModel):
+class Prompt2NovelaiArgs(BaseModel):
   prompt: str
   uc: str
   
@@ -31,11 +31,11 @@ class Prompt2NovelAIArgs(BaseModel):
     return cls(prompt=prompt, uc=uc)
       
 
-async def gen_b64_image(args: Optional[Prompt2NovelAIArgs] = None, prompt: Optional[str] = None, uc: Optional[str] = None):
+async def gen_b64_image(args: Optional[Prompt2NovelaiArgs] = None, prompt: Optional[str] = None, uc: Optional[str] = None):
   if not args:
     if not prompt:
       raise Exception("Either args or prompt must be provided")
-    args = Prompt2NovelAIArgs.convert_from_promt(prompt)
+    args = Prompt2NovelaiArgs.convert_from_promt(prompt)
   logging.info("Prompt2NovelAIArgs: %s", args)
   async with ClientSession(trust_env=True) as session:
     api = NovelAIAPI(session=session)

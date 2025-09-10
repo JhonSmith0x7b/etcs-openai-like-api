@@ -1,18 +1,22 @@
 import dotenv
-dotenv.load_dotenv(override=False)
+dotenv.load_dotenv(override=True)
 from fastapi import FastAPI, APIRouter, Request
 from fastapi.responses import StreamingResponse, Response
-from novel_ai import novel_ai_api
+from novelai_adapter import novelai_api, Prompt2NovelaiArgs
 import json
 import traceback
 from pydantic import BaseModel
 from typing import Optional
+from openai_adapter import OpenaiHelper
 import logging
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s')
 
 app = FastAPI()
 router = APIRouter(prefix="/novelai")
+
+
+openai_helper = OpenaiHelper()
 
 
 @app.middleware("http")
@@ -41,7 +45,14 @@ class SimpleNovelaiArgs(BaseModel):
 @router.api_route("/images/generations", methods=["POST"])
 async def novelai(body: SimpleNovelaiArgs):
     try:
-        b64_image = await novel_ai_api.gen_b64_image(prompt=body.prompt)
+        # add a function can auto gen prompt
+        b64_image = None
+        if body.prompt.startswith(">"):
+            prompt_dict = openai_helper.gen_novelai_prompt(body.prompt)
+            args = Prompt2NovelaiArgs(prompt=prompt_dict['prompt'], uc=prompt_dict['negative_prompt'])
+            b64_image = await novelai_api.gen_b64_image(args)
+        else:
+            b64_image = await novelai_api.gen_b64_image(prompt=body.prompt)
         async def stream_response():
             yield json.dumps({
                 "data": [
