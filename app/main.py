@@ -33,6 +33,7 @@ class SimpleNovelaiArgs(BaseModel):
 
 
 @router.api_route("/", methods=["POST"])
+@router.api_route("/images/generations", methods=["POST"])
 async def novelai(body: SimpleNovelaiArgs):
     try:
         b64_image = await novel_ai_api.gen_b64_image(prompt=body.prompt)
