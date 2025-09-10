@@ -5,6 +5,8 @@ from fastapi.responses import StreamingResponse, Response
 from novel_ai import novel_ai_api
 import json
 import traceback
+from pydantic import BaseModel
+from typing import Optional
 import logging
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s')
@@ -25,11 +27,15 @@ async def log_requests(request: Request, call_next):
     return response
 
 
-@router.api_route("/", methods=["POST"])
-async def novelai():
-    try:
-        b64_image = await novel_ai_api.gen_b64_image(prompt="1 girl---girl")
+class SimpleNovelaiArgs(BaseModel):
+    model: Optional[str]
+    prompt: str
 
+
+@router.api_route("/", methods=["POST"])
+async def novelai(body: SimpleNovelaiArgs):
+    try:
+        b64_image = await novel_ai_api.gen_b64_image(prompt=body.prompt)
         async def stream_response():
             yield json.dumps({
                 "data": [

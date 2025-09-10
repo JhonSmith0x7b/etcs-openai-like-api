@@ -16,7 +16,7 @@ RUN pip install -r requirements.txt
 # 复制其余代码
 COPY ./app /app/
 
-COPY .env /app/.env
+RUN if [ -f .env ]; then cp .env /app/.env; fi
 
 RUN chmod -R 777 /app
 
