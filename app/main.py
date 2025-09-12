@@ -30,7 +30,7 @@ class TimeoutMiddleware(BaseHTTPMiddleware):
         try:
             return await asyncio.wait_for(call_next(request), timeout=self.timeout)
         except asyncio.TimeoutError:
-            return Response(content="Request timed out", status_code=504)
+            return {"error": "return sth for stop request"}
 
 
 @app.middleware("http")
