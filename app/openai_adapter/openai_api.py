@@ -56,7 +56,8 @@ negative_prompt: lowres, error, film grain, scan artifacts, worst quality, bad q
             temperature=0.7,
             top_p=1,
             frequency_penalty=0,
-            presence_penalty=0
+            presence_penalty=0,
+            timeout=5
         )
         content = response.choices[0].message.content
         logging.info("OpenAI response: %s", content)
