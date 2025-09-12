@@ -8,8 +8,6 @@ import traceback
 from pydantic import BaseModel
 from typing import Optional
 from openai_adapter import OpenaiHelper
-from starlette.middleware.base import BaseHTTPMiddleware
-import asyncio
 import logging
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s')
@@ -19,18 +17,6 @@ router = APIRouter(prefix="/novelai")
 
 
 openai_helper = OpenaiHelper()
-
-
-class TimeoutMiddleware(BaseHTTPMiddleware):
-    def __init__(self, app, timeout: int):
-        super().__init__(app)
-        self.timeout = timeout
-
-    async def dispatch(self, request, call_next):
-        try:
-            return await asyncio.wait_for(call_next(request), timeout=self.timeout)
-        except asyncio.TimeoutError:
-            return {"error": "return sth for stop request"}
 
 
 @app.middleware("http")
@@ -82,7 +68,6 @@ async def novelai(body: SimpleNovelaiArgs):
 
 
 app.include_router(router)
-app.add_middleware(TimeoutMiddleware, timeout=15)
 
 
 if __name__ == '__main__':
