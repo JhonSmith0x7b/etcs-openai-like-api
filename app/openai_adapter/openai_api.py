@@ -23,7 +23,8 @@ class OpenaiHelper():
     def __init__(self):
         self.client = openai.OpenAI(
             base_url=OPENAI_BASE_URL,
-            api_key=OPENAI_API_KEY
+            api_key=OPENAI_API_KEY,
+            max_retries=1
             )
         self.novelai_prompt = """<目标>
 根据用户输入跟要求给出和修改 novelai4 图片生成的提示词, 包括正向与反向, pixiv 的画师名有很强的加成, 如果有适合的画师风格必须添加画师名.
